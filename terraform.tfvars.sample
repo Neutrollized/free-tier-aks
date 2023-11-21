@@ -1,0 +1,16 @@
+# cilium install --list-versions
+cilium_version = "1.14.3"
+cluster_id     = 1
+
+# full cluster name will be prefix + cluster_id (i.e. "playground-aks-1")
+aks_cluster_name_prefix = "playground-aks"
+
+enable_ebpf_data_plane = true
+
+address_space_cidr       = "192.168.128.0/26"
+pods_ipv4_cidr_block     = ["10.10.0.0/18"]
+services_ipv4_cidr_block = ["10.11.0.0/20"]
+dns_service_ip           = "10.11.0.10"
+
+vm_size    = "Standard_D2_v3"
+node_count = 2

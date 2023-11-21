@@ -51,6 +51,12 @@ variable "sku_tier" {
   }
 }
 
+variable "enable_ebpf_data_plane" {
+  description = "Specifies eBPF data plane to use. Can either be 'cilium' or nothing (left blank)"
+  type        = bool
+  default     = false
+}
+
 variable "network_plugin" {
   description = "AKS network plugin type.  If you want to BYOCNI (i.e. OSS Cilium), select 'none'"
   type        = string
@@ -60,6 +66,13 @@ variable "network_plugin" {
     condition     = contains(["azure", "kubenet", "none"], var.network_plugin)
     error_message = "Accepted values are 'azure', 'kubenet' or 'none'"
   }
+}
+
+variable "network_policy" {
+  description = "Network policy to be used Azure CNI. Accepted values are 'calico', 'azure', 'cilium' or null"
+  type        = string
+  default     = null
+  nullable    = true
 }
 
 variable "pods_ipv4_cidr_block" {
@@ -94,4 +107,15 @@ variable "node_count" {
   description = "AKS node count"
   type        = number
   default     = 1
+}
+
+variable "os_sku" {
+  description = "Node OS SKU"
+  type        = string
+  default     = "Ubuntu"
+
+  validation {
+    condition     = contains(["AzureLinux", "CBLMariner", "Mariner", "Ubuntu", "Windows2019", "Windows2022"], var.os_sku)
+    error_message = "Accepted values are 'AzureLinux', 'CBLMariner' 'Mariner', 'Ubuntu', 'Windows2019' or 'Windows2022'"
+  }
 }

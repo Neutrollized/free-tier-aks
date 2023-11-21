@@ -34,7 +34,7 @@ resource "azurerm_user_assigned_identity" "aks" {
 }
 
 resource "azurerm_role_assignment" "aks" {
-  scope                = data.azurerm_subscription.primary.id
+  scope                = azurerm_resource_group.aks.id
   role_definition_name = "Contributor"
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
 }
@@ -42,6 +42,7 @@ resource "azurerm_role_assignment" "aks" {
 
 ###----------------------------------------
 # AKS
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 #------------------------------------------
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
@@ -51,7 +52,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
 
   network_profile {
-    network_plugin = var.network_plugin
+    ebpf_data_plane = var.enable_ebpf_data_plane ? "cilium" : null
+
+    network_plugin      = var.enable_ebpf_data_plane ? "azure" : var.network_plugin
+    network_plugin_mode = var.network_plugin == "azure" || var.enable_ebpf_data_plane ? "overlay" : null
+    network_policy      = var.enable_ebpf_data_plane ? "cilium" : var.network_policy
 
     pod_cidrs      = var.pods_ipv4_cidr_block
     service_cidrs  = var.services_ipv4_cidr_block
@@ -62,9 +67,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     name       = "default"
     node_count = var.node_count
     vm_size    = var.vm_size
+    os_sku     = var.os_sku
 
     enable_node_public_ip = true
     fips_enabled          = false
+    vnet_subnet_id        = azurerm_virtual_network.aks.subnet.*.id[0]
   }
 
   identity {

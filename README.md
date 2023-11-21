@@ -1,9 +1,9 @@
 # Free Tier AKS
 
-Purpose of this cluster was to build an AKS cluster for the express purpose of using it to setup a Cilium ClusterMesh with my Free Tier GKE cluster.
+Purpose of this cluster was to build an AKS cluster for the express purpose of using it to setup a Cilium ClusterMesh with my [Free Tier GKE](https://github.com/Neutrollized/free-tier-gke) cluster.
 
 ## Why AKS?
-I chose AKS because like Google, Azure also has a free tier offering for their managed Kubernetes service that is pretty decent.
+I chose AKS because like Google, Azure also has a [free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers) offering for their managed Kubernetes service that is pretty decent.
 
 
 ## Installing Cilium
@@ -19,5 +19,16 @@ cilium install \
   --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.100.0.0/18}'
 ```
 
+- example output:
+```
+🔮 Auto-detected Kubernetes kind: AKS
+ℹ️  Using Cilium version 1.14.3
+ℹ️  Using cluster name "playground-aks-6"
+✅ Derived Azure subscription ID 12345678-90ab-cdef-edcb-a09876543210 from subscription MySubscription
+✅ Detected Azure AKS cluster in BYOCNI mode (no CNI plugin pre-installed)
+🔮 Auto-detected kube-proxy has been installed
+```
+
 ## ClusterMesh setup
 Documentation and examples can be found [here](./cilium/clustermesh/)
+
