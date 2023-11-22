@@ -4,6 +4,8 @@
 Based on [Cilium's documentation](https://docs.cilium.io/en/stable/network/clustermesh/aks-clustermesh-prep/).  The quick and dirty way of getting this up and running is to duplicate this repo under another name and create a second AKS cluster under the same account and peer the two virtual networks (and the VNet IDs are part of the TF outputs, so you don't have to go digging for them).
 
 ### VNet peering
+I must say that I'm very surprised as to how simple it is to peer two Azure VNets from different resource groups...
+
 - peering VNet 1 with VNet 2
 ```
 az network vnet peering create \

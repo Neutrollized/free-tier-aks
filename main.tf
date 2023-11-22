@@ -16,7 +16,6 @@ resource "azurerm_virtual_network" "aks" {
   resource_group_name = azurerm_resource_group.aks.name
   address_space       = [var.address_space_cidr]
 
-
   subnet {
     name           = "aks-node-subnet"
     address_prefix = var.address_space_cidr
