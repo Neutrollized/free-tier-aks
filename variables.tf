@@ -52,7 +52,7 @@ variable "sku_tier" {
 }
 
 variable "enable_ebpf_data_plane" {
-  description = "Specifies eBPF data plane to use. Can either be 'cilium' or nothing (left blank)"
+  description = "Specifies eBPF data plane to use (whether to use Cilium or not)"
   type        = bool
   default     = false
 }
