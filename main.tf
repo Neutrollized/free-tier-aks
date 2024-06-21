@@ -50,6 +50,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   sku_tier            = var.sku_tier
   dns_prefix          = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
 
+  azure_policy_enabled = var.azure_policy_enabled
+
   network_profile {
     ebpf_data_plane = var.enable_ebpf_data_plane ? "cilium" : null
 

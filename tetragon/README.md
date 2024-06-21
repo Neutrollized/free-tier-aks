@@ -1,6 +1,18 @@
 # Tracing Policy examples
 You can find more in my [GKE repo's examples](https://github.com/Neutrollized/free-tier-gke/tree/master/examples/tetragon).
 
+## Setup
+```console
+helm repo add cilium https://helm.cilium.io
+helm repo update
+
+helm search repo cilium/tetragon -l
+
+helm install tetragon cilium/tetragon \
+  --namespace kube-system \
+  --version 1.1.2
+```
+
 ## Override
 The override action is only available to kernels compiled with `CONFIG_BPF_KPROBE_OVERRIDE` set/enabled.  There are a couple of ways to check for this:
 

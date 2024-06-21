@@ -68,6 +68,12 @@ variable "network_plugin" {
   }
 }
 
+variable "azure_policy_enabled" {
+  description = "Whether to enable Azure Policy add-on on the cluster"
+  type        = bool
+  default     = false
+}
+
 variable "network_policy" {
   description = "Network policy to be used Azure CNI. Accepted values are 'calico', 'azure', 'cilium' or null"
   type        = string

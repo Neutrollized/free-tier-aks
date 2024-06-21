@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2024-06-21
+### Added
+- New variable `azure_policy_enabled` (default: `false`) which toggles [Azure Policy](https://learn.microsoft.com/en-us/azure/governance/policy/concepts/policy-for-kubernetes) add-on on the cluster
+
 ## [0.2.2] - 2024-05-10
 ### Added
 - Added `tetragon` examples
