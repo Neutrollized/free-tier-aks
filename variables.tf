@@ -99,6 +99,34 @@ variable "dns_service_ip" {
   default     = "10.101.0.10"
 }
 
+variable "blob_csi_driver_enabled" {
+  description = "Whether Blob CSI driver is enabled"
+  type        = bool
+  default     = false
+}
+
+variable "file_csi_driver_enabled" {
+  description = "Whether File CSI driver is enabled"
+  type        = bool
+  default     = true
+}
+
+variable "disk_csi_driver_enabled" {
+  description = "Whether Disk CSI driver is enabled"
+  type        = bool
+  default     = true
+}
+
+variable "disk_csi_driver_version" {
+  description = "Disk CSI driver version to be used. v2 is Public Preview opt-in"
+  type        = string
+  default     = "v1"
+
+  validation {
+    condition     = contains(["v1", "v2"], var.disk_csi_driver_version)
+    error_message = "Accepted values are 'v1' or 'v2'"
+  }
+}
 
 ###--------------------------
 # AKS nodes

@@ -64,6 +64,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dns_service_ip = var.dns_service_ip
   }
 
+  storage_profile {
+    blob_driver_enabled = var.blob_csi_driver_enabled
+    file_driver_enabled = var.file_csi_driver_enabled
+
+    disk_driver_enabled = var.disk_csi_driver_enabled
+    disk_driver_version = var.disk_csi_driver_version
+  }
+
   default_node_pool {
     name       = "default"
     node_count = var.node_count
