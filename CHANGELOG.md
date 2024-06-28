@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2024-06-28
+### Added
+- `examples/azure-container-storage` 
+### Changed
+- Added `examples` folder for organization, moved `cilium` and `tetragon` folders under it
+
+- New variable `blob_csi_driver_enabled` (default: `false`) which toggles [Azure Blob CSI driver](https://learn.microsoft.com/en-us/azure/aks/azure-blob-csi?tabs=NFS) on the cluster 
 ## [0.2.4] - 2024-06-22
 ### Added
 - New variable `blob_csi_driver_enabled` (default: `false`) which toggles [Azure Blob CSI driver](https://learn.microsoft.com/en-us/azure/aks/azure-blob-csi?tabs=NFS) on the cluster 

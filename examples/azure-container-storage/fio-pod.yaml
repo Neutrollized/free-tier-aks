@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fiopod
+spec:
+  containers:
+  - name: fio
+    image: nixery.dev/shell/fio
+    args:
+    - sleep
+    - "1000000"
+    volumeMounts:
+    - mountPath: "/mnt/acsvolume"
+      name: acstor-pv
+      readOnly: false
+  volumes:
+  - name: acstor-pv
+    persistentVolumeClaim:
+      claimName: acstor-pvc

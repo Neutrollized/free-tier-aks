@@ -30,5 +30,5 @@ cilium install \
 ```
 
 ## ClusterMesh setup
-Documentation and examples can be found [here](./cilium/clustermesh/)
+Documentation and examples can be found [here](./examples/cilium/clustermesh/)
 

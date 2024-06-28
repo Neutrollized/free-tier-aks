@@ -1,0 +1,12 @@
+---
+apiVersion: containerstorage.azure.com/v1
+kind: StoragePool
+metadata:
+  name: azdisk-sp
+  namespace: acstor
+spec:
+  poolType:
+    azureDisk: {}
+  resources:
+    requests:
+      storage: 100Gi

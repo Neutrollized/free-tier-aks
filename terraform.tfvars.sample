@@ -1,5 +1,5 @@
 # cilium install --list-versions
-cilium_version = "1.14.3"
+cilium_version = "1.15.6"
 cluster_id     = 1
 
 # full cluster name will be prefix + cluster_id (i.e. "playground-aks-1")
@@ -12,5 +12,7 @@ pods_ipv4_cidr_block     = ["10.10.0.0/18"]
 services_ipv4_cidr_block = ["10.11.0.0/20"]
 dns_service_ip           = "10.11.0.10"
 
-vm_size    = "Standard_D2_v3"
-node_count = 2
+azure_policy_enabled = true
+
+vm_size    = "Standard_DS3_v2"
+node_count = 3
