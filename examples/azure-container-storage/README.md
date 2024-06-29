@@ -33,7 +33,7 @@ There should a a 512Gi *azuredisk* storage pool (sp) in the *acstor* namespace t
 
 - create storage pool:
 ```sh
-kubectl apply -f actor-azdisk-sp.yaml
+kubectl apply -f acstor-azdisk-sp.yaml
 ```
 
 - sample `kubectl get sp -n acstor` output:
