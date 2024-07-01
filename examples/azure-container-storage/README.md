@@ -24,7 +24,7 @@ az aks update --cluster-name playground-aks-1 \
 ```
 where `<storage-pool-types>` can be `azureDisk`, `ephemeralDisk`, or `elasticSan`, some of which requires additiona perms/access.  We'll stick with the most general/common use one: `azureDisk`
 
-**NOTE:** you may have label your node pool(s) prior to running the command below if you have multiple ones, for the example here, we only have one (default) node pool and it will get updated with the label (**acstor.azure.com/io-engine: acstor**) automatically
+**NOTE:** you may have to label your node pool(s) prior to running the command below if you have multiple ones, for the example here, we only have one (default) node pool and it will get updated with the label, `acstor.azure.com/io-engine: acstor` automatically
 
 
 ## How-to use ACS
@@ -42,7 +42,7 @@ NAME        CAPACITY       AVAILABLE      USED         RESERVED      READY   AGE
 azdisk-sp   107374182400   106285674496   1088507904   11519455232   True    5m52s
 ```
 
-**NOTE:** create a storage pool also creates a storage class (with `acstor-` prefix) using default settings.  If you wanted other settings, create your own :)
+**NOTE:** create a storage pool also creates a storage class (with `acstor-` prefix) using default settings.  If you wanted bespoke settings, you'll have to create your own.
 
 - sample `kubectl describe sc acstor-azdisk-sp` output:
 ```
