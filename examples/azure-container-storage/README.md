@@ -18,7 +18,7 @@ az extension add -n k8s-extension
 ## Setup
 The follow command takes ~15 min to run, so be patient:
 ```sh
-az aks update --cluster-name playground-aks-1 \
+az aks update --name playground-aks-1 \
   --resource-group playground-aks-1-rg \
   --enable-azure-container-storage <storage-pool-type>
 ```
