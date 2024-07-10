@@ -16,3 +16,5 @@ azure_policy_enabled = true
 
 vm_size    = "Standard_DS3_v2"
 node_count = 3
+
+enable_acs = true

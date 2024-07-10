@@ -2,6 +2,8 @@
 
 At the time of writing, [ACS](https://azure.microsoft.com/en-us/products/container-storage) is still in **Preview** status.
 
+**NOTE:** some of the setup steps/commands via Azure CLI below are only required if you did not enable the ACS extension in the Terraform deployment
+
 ## Pre-requisites
 - many of the setup commands need to be done via Azure CLI, which also needs the *k8s-extension* installed:
 ```sh

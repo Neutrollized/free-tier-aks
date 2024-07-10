@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2024-07-10
+### Added
+- [`azurerm_kubernetes_cluster_extension`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_extension) resource to toggle the Azure Container Storage (ACS) extension
+- New variable, `enable_acs` (default: `false`) which toggles ACS 
+- New variable, `acs_azuredisk_enabled` (default: `true`) to enable Azure Disks as an ACS backend (if enabled)
+- New variable, `acs_azuredisk_sku` (default: `Premium_LRS`). **NOTE:** not all SKUs are supported by a Free Tier AKS cluster
+- Required node label (**acstor.azure.com/io-engine: acstor**) to use ACS
+
 ## [0.2.5] - 2024-06-28
 ### Added
 - `examples/azure-container-storage` 

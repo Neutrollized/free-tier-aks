@@ -153,3 +153,30 @@ variable "os_sku" {
     error_message = "Accepted values are 'AzureLinux', 'CBLMariner' 'Mariner', 'Ubuntu', 'Windows2019' or 'Windows2022'"
   }
 }
+
+
+###--------------------------
+# AKS extension - ACS
+#----------------------------
+variable "enable_acs" {
+  description = "Whether to enable Azure Container Storage"
+  type        = bool
+  default     = false
+}
+
+variable "acs_azuredisk_enabled" {
+  description = "Whether Azure Disks is enabled as an ACS backend"
+  type        = bool
+  default     = true
+}
+
+variable "acs_azuredisk_sku" {
+  description = "Azure Disk disk tier"
+  type        = string
+  default     = "Premium_LRS"
+
+  validation {
+    condition     = contains(["Premium_LRS", "Standard_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS", "PremiumV2_LRS", "StandardSSD_ZRS"], var.acs_azuredisk_sku)
+    error_message = "Accepted values are 'Premium_LRS', 'Standard_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS', 'Premium_ZRS', 'PremiumV2_LRS', or 'StandardSSD_ZRS'"
+  }
+}

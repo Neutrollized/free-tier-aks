@@ -81,10 +81,41 @@ resource "azurerm_kubernetes_cluster" "aks" {
     enable_node_public_ip = true
     fips_enabled          = false
     vnet_subnet_id        = azurerm_virtual_network.aks.subnet.*.id[0]
+
+    # nodes need to have this label to use Azure Container Storage (ACS)
+    node_labels = {
+      "acstor.azure.com/io-engine" = "acstor"
+    }
   }
 
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.aks.id]
+  }
+}
+
+
+###--------------------------------------------------
+# AKS Extensions
+# https://learn.microsoft.com/en-us/azure/aks/cluster-extensions?tabs=azure-cli#currently-available-extensions
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_extension
+#----------------------------------------------------
+resource "azurerm_kubernetes_cluster_extension" "acs" {
+  count          = var.enable_acs ? 1 : 0
+  name           = "azurecontainerstorage"
+  cluster_id     = azurerm_kubernetes_cluster.aks.id
+  extension_type = "microsoft.azurecontainerstorage"
+
+  configuration_settings = {
+    "global.cli.activeControl"                   = true
+    "global.cli.storagePool.install.create"      = false
+    "global.cli.storagePool.disable.validation"  = false
+    "global.cli.storagePool.disable.active"      = false
+    "global.cli.storagePool.azureDisk.enabled"   = var.acs_azuredisk_enabled
+    "global.cli.storagePool.azureDisk.sku"       = var.acs_azuredisk_sku
+    "global.cli.resources.num_hugepages"         = "512"
+    "global.cli.resources.ioEngine.cpu"          = "1"
+    "global.cli.resources.ioEngine.memory"       = "1Gi"
+    "global.cli.resources.ioEngine.hugepages2Mi" = "1Gi"
   }
 }
