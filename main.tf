@@ -9,17 +9,22 @@ resource "azurerm_resource_group" "aks" {
 
 ###----------------------------------------
 # Network
+# https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet
 #------------------------------------------
 resource "azurerm_virtual_network" "aks" {
   name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-vnet"
   location            = azurerm_resource_group.aks.location
   resource_group_name = azurerm_resource_group.aks.name
-  address_space       = [var.address_space_cidr]
+  address_space       = var.vnet_cidrs
+}
 
-  subnet {
-    name           = "aks-node-subnet"
-    address_prefix = var.address_space_cidr
-  }
+resource "azurerm_subnet" "aks" {
+  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-subnet"
+  resource_group_name  = azurerm_resource_group.aks.name
+  virtual_network_name = azurerm_virtual_network.aks.name
+  address_prefixes     = var.subnet_cidrs
+  service_endpoints    = var.subnet_service_endpoints
 }
 
 
@@ -38,6 +43,18 @@ resource "azurerm_role_assignment" "aks" {
   principal_id         = azurerm_user_assigned_identity.aks.principal_id
 }
 
+resource "azurerm_user_assigned_identity" "kubelet" {
+  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-kubelet-identity"
+  location            = azurerm_resource_group.aks.location
+  resource_group_name = azurerm_resource_group.aks.name
+}
+
+resource "azurerm_role_assignment" "kubelet" {
+  scope                = azurerm_resource_group.aks.id
+  role_definition_name = "Managed Identity Operator"
+  principal_id         = azurerm_user_assigned_identity.kubelet.principal_id
+}
+
 
 ###----------------------------------------
 # AKS
@@ -50,7 +67,20 @@ resource "azurerm_kubernetes_cluster" "aks" {
   sku_tier            = var.sku_tier
   dns_prefix          = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
 
-  azure_policy_enabled = var.azure_policy_enabled
+  azure_policy_enabled      = var.azure_policy_enabled
+  workload_identity_enabled = var.enable_workload_identity
+  oidc_issuer_enabled       = var.enable_workload_identity
+
+  api_server_access_profile {
+    authorized_ip_ranges = var.aks_authorized_ip_ranges
+  }
+
+  # NOTE: object ID == principal ID
+  kubelet_identity {
+    client_id                 = azurerm_user_assigned_identity.kubelet.client_id
+    object_id                 = azurerm_user_assigned_identity.kubelet.principal_id
+    user_assigned_identity_id = azurerm_user_assigned_identity.kubelet.id
+  }
 
   network_profile {
     ebpf_data_plane = var.enable_ebpf_data_plane ? "cilium" : null
@@ -78,9 +108,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = var.vm_size
     os_sku     = var.os_sku
 
-    enable_node_public_ip = true
+    enable_node_public_ip = var.enable_node_public_ip
     fips_enabled          = false
-    vnet_subnet_id        = azurerm_virtual_network.aks.subnet.*.id[0]
+    vnet_subnet_id        = azurerm_subnet.aks.id
 
     # nodes need to have this label to use Azure Container Storage (ACS)
     node_labels = {

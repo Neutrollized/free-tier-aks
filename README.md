@@ -1,6 +1,9 @@
 # Free Tier AKS
 
-Purpose of this cluster was to build an AKS cluster for the express purpose of using it to setup a Cilium ClusterMesh with my [Free Tier GKE](https://github.com/Neutrollized/free-tier-gke) cluster.
+The main/original purpose of this cluster was to build an AKS cluster for the express purpose of using it to setup a Cilium ClusterMesh with my [Free Tier GKE](https://github.com/Neutrollized/free-tier-gke) cluster.
+
+Since then, I've added additional content and examples for features (such as [Azure Container Storage](https://azure.microsoft.com/en-us/products/container-storage)) that I found interesting.
+ 
 
 ## Why AKS?
 I chose AKS because like Google, Azure also has a [free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers) offering for their managed Kubernetes service that is pretty decent.
@@ -29,6 +32,6 @@ cilium install \
 🔮 Auto-detected kube-proxy has been installed
 ```
 
-## ClusterMesh setup
+### ClusterMesh setup
 Documentation and examples can be found [here](./examples/cilium/clustermesh/)
 

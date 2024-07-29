@@ -1,4 +1,4 @@
-###--------------------------
+##--------------------------
 # Provider variables
 #----------------------------
 variable "location" {
@@ -25,16 +25,34 @@ variable "cluster_id" {
 ###--------------------------
 # VNet
 #----------------------------
-variable "address_space_cidr" {
+variable "vnet_cidrs" {
   description = "VNet CIDR"
-  type        = string
-  default     = "192.168.64.0/26"
+  type        = list(string)
+  default     = ["192.168.0.0/24"]
+}
+
+variable "subnet_cidrs" {
+  description = "Subnet CIDR"
+  type        = list(string)
+  default     = ["192.168.0.0/25"]
+}
+
+variable "subnet_service_endpoints" {
+  description = "List of Service Endpoints"
+  type        = list(string)
+  default     = ["Microsoft.ContainerRegistry"]
 }
 
 
 ###--------------------------
 # AKS cluster
 #----------------------------
+variable "aks_authorized_ip_ranges" {
+  description = "Authorized IP ranges that is allowed access"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "aks_cluster_name_prefix" {
   description = "Prefix of the AKS cluster name.  Full name is prefix + cluster_id"
   type        = string
@@ -68,8 +86,25 @@ variable "network_plugin" {
   }
 }
 
+variable "aks_auto_upgrade_channel" {
+  description = "Upgrade channel for AKS"
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = contains(["", "patch", "rapid", "node-image", "stable"], var.aks_auto_upgrade_channel)
+    error_message = "Accepted values are '', 'patch', 'rapid', 'node-image' or 'stable'"
+  }
+}
+
 variable "azure_policy_enabled" {
   description = "Whether to enable Azure Policy add-on on the cluster"
+  type        = bool
+  default     = false
+}
+
+variable "enable_workload_identity" {
+  description = "Whether to enable Azure AD Workload Identity on the cluster.  Enabling this will also enable the OIDC issuer URL"
   type        = bool
   default     = false
 }
@@ -152,6 +187,12 @@ variable "os_sku" {
     condition     = contains(["AzureLinux", "CBLMariner", "Mariner", "Ubuntu", "Windows2019", "Windows2022"], var.os_sku)
     error_message = "Accepted values are 'AzureLinux', 'CBLMariner' 'Mariner', 'Ubuntu', 'Windows2019' or 'Windows2022'"
   }
+}
+
+variable "enable_node_public_ip" {
+  description = "Whether nodes in the node pool should have a public IP"
+  type        = bool
+  default     = false
 }
 
 

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
+## [0.4.0] - 2024-07-29
+### Added
+- New variable `aks_authorized_ip_ranges` (default: `["0.0.0.0/0"]`) is the list of IP addresses and CIDRs that can talk to your control plane (api-server).  Default is public, but you should change it to your home public IP (or VPN or whatever)
+- New variable `enable_node_public_ip` (default: `false`)
+- `kubelet_identity` user created (with `Managed Identity Operator` role)
+- New variable, `enable_workload_identity` (default: `false`) to toggle [Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-deploy-cluster) on AKS (NOTE: enabling this feature will also enable the [OIDC issuer URL](https://learn.microsoft.com/en-gb/azure/aks/use-oidc-issuer))
+- New variable, `subnet_service_endpoints` (default: `["Microsoft.ContainerRegistry"]`) for for defining [Service Endpoints](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview) for the VNet (even though it's set at a subnet level)
+### Changed
+- Subnet now has in its own resource definition (previously defined as a stanza within `azurerm_virtual_network`)
+
 ## [0.3.0] - 2024-07-10
 ### Added
 - [`azurerm_kubernetes_cluster_extension`](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_extension) resource to toggle the Azure Container Storage (ACS) extension
