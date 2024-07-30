@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.5.0] - 2024-07-30
+### Added
+- New variable `enable_static_azurefiles` (default: `false`) will toggle whether a static Azure File file share with Private Endpoint is deployed
+- New variable `storacct_authorized_ip_ranges` (default: `["0.0.0.0/0"]`) is the list of IP addresses authorized to make changes, add share, etc. to your Storage Account after you've blocked public access (via Storage account network rules). Default is public, but you should lock it down to your home public IP, VPN, etc.
+- `examples/static-azurefiles-pv` with example of how to use kubelet's identity to obtain [SAS token](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview) for mounting a statically provisioned Azure File storage (with [Private Endpoint](https://learn.microsoft.com/en-us/azure/storage/common/storage-private-endpoints)) for persistent volumes (PV) so that it is not stored in a kubernetes secret
+
 ## [0.4.0] - 2024-07-29
 ### Added
 - New variable `aks_authorized_ip_ranges` (default: `["0.0.0.0/0"]`) is the list of IP addresses and CIDRs that can talk to your control plane (api-server).  Default is public, but you should change it to your home public IP (or VPN or whatever)

@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: mypod
+        image: nginx:latest
+        securityContext:
+          allowPrivilegeEscalation: false
+        ports:
+        - name: web
+          containerPort: 80
+        resources:
+          requests:
+            cpu: "250m"
+        volumeMounts:
+        - mountPath: "/mnt/azure"
+          name: myvol
+          readOnly: false
+      volumes:
+      - name: myvol
+        persistentVolumeClaim:
+          claimName: azurefile

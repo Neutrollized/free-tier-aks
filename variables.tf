@@ -221,3 +221,19 @@ variable "acs_azuredisk_sku" {
     error_message = "Accepted values are 'Premium_LRS', 'Standard_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS', 'Premium_ZRS', 'PremiumV2_LRS', or 'StandardSSD_ZRS'"
   }
 }
+
+
+###-----------------------------
+# Misc. - Static Azure Files
+#-------------------------------
+variable "enable_static_azurefiles" {
+  description = "Whether to deploy Azure Files statically"
+  type        = bool
+  default     = false
+}
+
+variable "storacct_authorized_ip_ranges" {
+  description = "Authorized IP ranges that is allowed (not denied by Storage Account network rules). For single IPs, do not include the netmask"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}

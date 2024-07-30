@@ -122,6 +122,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.aks.id]
   }
+
+  depends_on = [
+    azurerm_role_assignment.kubelet
+  ]
 }
 
 

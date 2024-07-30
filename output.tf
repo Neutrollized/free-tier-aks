@@ -12,3 +12,18 @@ output "vnet_id" {
   value       = azurerm_virtual_network.aks.id
   description = "Azure VNet ID for use when performing network peering or VPNs."
 }
+
+output "azure_files_storage_account_rg_name" {
+  value       = var.enable_static_azurefiles ? "${azurerm_resource_group.storacctrg[0].name}" : "N/A - Static Azure Files not deployed"
+  description = "Name of Resource Group housing Storage Account"
+}
+
+output "azure_files_storage_account_name" {
+  value       = var.enable_static_azurefiles ? "${azurerm_storage_account.mystoracct[0].name}" : "N/A - Static Azure Files not deployed"
+  description = "Name of Azure Storage Account providing Azure Files"
+}
+
+output "azure_files_file_share_name" {
+  value       = var.enable_static_azurefiles ? "${azurerm_storage_share.myfileshare[0].name}" : "N/A - Static Azure Files not deployed"
+  description = "Name of Azure Files file share"
+}
