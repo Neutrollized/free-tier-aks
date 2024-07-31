@@ -7,18 +7,18 @@ metadata:
   name: azurefile
 spec:
   capacity:
-    storage: 101Gi
+    storage: 100Gi
   accessModes:
   - ReadWriteMany
   storageClassName: azurefile-pvtendpoint
   csi:
     driver: file.csi.azure.com
-    volumeHandle: "azurefiles-storage-rg#azurefilessab775#myfileshare"	# UPDATE THIS
+    volumeHandle: "azurefiles-storage-rg#azurefilessa28f4#myfileshare"	# UPDATE
     volumeAttributes:
-      resourceGroup: "azurefiles-storage-rg"
-      storageAccount: "azurefilessab775"	# UPDATE THIS
-      shareName: "myfileshare"
+      resourceGroup: "azurefiles-storage-rg"				# UPDATE
+      storageAccount: "azurefilessa28f4"				# UPDATE
+      shareName: "myfileshare"						# UPDATE
       protocol: smb
-      server: "azurefilessab775.privatelink.file.core.windows.net"	# UPDATE THIS
+      server: "azurefilessa28f4.privatelink.file.core.windows.net"	# UPDATE
       networkEndpointType: privateEndpoint
-      #clientID: "3af98405-266e-44f7-8ed5-7dd4057d00c5"	# UPDATE THIS IF APPLICABLE - NEW REQ FOR WI
+      clientID: "a978cdb2-71b5-41d9-8f7d-8618b8b93c44"			# UPDATE IF APPLICABLE - REQ FOR WI

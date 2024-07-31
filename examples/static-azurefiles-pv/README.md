@@ -24,7 +24,7 @@ I have provided a custom SC, PV and PVC definition for you to try out.  At the e
 
 
 ## Using Workload Idenity
-A requirement to use Workload Identity with statically provisioned Azure Files is an AKS cluster that is v1.29+ (I tested on v1.30).  It works very similar to using a the Kubelet's identity option, but you have to provide `spec.csi.volumeAttributes.clientID` as well (which is the client ID of your Workload Identity federated user) in the PV's parameters.
+A requirement to use [Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview?tabs=dotnet) with statically provisioned Azure Files is an AKS cluster that is v1.29+ (I tested on v1.30).  It works very similar to using a the Kubelet's identity option, but you have to provide `spec.csi.volumeAttributes.clientID` as well (which is the client ID of your Workload Identity federated user) in the PV's parameters.
 
 You will also have to create a Kubernetes service account (KSA) and reference the client ID as well in its annotations. You can see an example of this in [`nginx-wi-deploy.yaml`](./nginx-wi-deploy.yaml).
 
@@ -53,3 +53,7 @@ Non-authoritative answer:
 Name:	azurefilessac84a.privatelink.file.core.windows.net
 Address: 192.168.0.4
 ```
+
+
+## Additional notes
+You **CANNOT** migrate from using Kubelet identity to Workload Identity.  And this is because the PV's spec is immutable once created, but in order to use Workload Identity, you need to add the WI user's client ID as a parameter in the PV's spec.

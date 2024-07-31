@@ -1,10 +1,12 @@
 ###----------------------------------------
 # Statically Provisioned Azure Files
-# - resource provisioned only when
-#   enable_static_azurefiles = true
-# - see examples/static-azurefiles-pv
-#   for more details
+# - resource provisioned only when enable_static_azurefiles = true
+# - see examples/static-azurefiles-pv for more details
 #------------------------------------------
+locals {
+  storacct_rg      = "azurefiles-storage-rg"
+  azurefiles_share = "myfileshare"
+}
 
 # added 4 random chars to Storage Account name as suffix
 resource "random_id" "name_suffix" {
@@ -14,7 +16,7 @@ resource "random_id" "name_suffix" {
 
 resource "azurerm_resource_group" "storacctrg" {
   count    = var.enable_static_azurefiles ? 1 : 0
-  name     = "azurefiles-storage-rg"
+  name     = local.storacct_rg
   location = var.location
 }
 
@@ -80,7 +82,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "pvtzone_link" {
 #---------------------------------------------------------
 resource "azurerm_storage_share" "myfileshare" {
   count                = var.enable_static_azurefiles ? 1 : 0
-  name                 = "myfileshare"
+  name                 = local.azurefiles_share
   storage_account_name = azurerm_storage_account.mystoracct[count.index].name
   access_tier          = "Premium"
   quota                = 101 # (max) size of share in GiB -- needs to be > 100 for Premium access tier

@@ -4,7 +4,7 @@ kind: StorageClass
 metadata:
   name: azurefile-pvtendpoint
 provisioner: file.csi.azure.com
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
 allowVolumeExpansion: true
 mountOptions:

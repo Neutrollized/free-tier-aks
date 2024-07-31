@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
- name: nginx-wi-ksa	# UPDATE THIS
- namespace: default	# UPDATE THIS
+ name: nginx-wi-ksa								# UPDATE
+ namespace: default								# UPDATE
  annotations:
-   azure.workload.identity/client-id: “3af98405-266e-44f7-8ed5-7dd4057d00c5”	# UPDATE THIS
+   azure.workload.identity/client-id: "a978cdb2-71b5-41d9-8f7d-8618b8b93c44"	# UPDATE
 ---
 apiVersion: apps/v1
 kind: Deployment

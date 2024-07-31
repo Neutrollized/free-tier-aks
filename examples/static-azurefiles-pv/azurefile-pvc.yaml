@@ -10,4 +10,4 @@ spec:
   volumeName: azurefile
   resources:
     requests:
-      storage: 101Gi
+      storage: 100Gi
