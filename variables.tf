@@ -58,6 +58,12 @@ variable "aks_cluster_name_prefix" {
   type        = string
 }
 
+variable "kubernetes_version" {
+  description = "Version of Kubernetes to run. If left as null, the latest recommended version will be used"
+  type        = string
+  default     = null
+}
+
 variable "sku_tier" {
   description = "AKS tier"
   type        = string

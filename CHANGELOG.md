@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.6.0] - 2024-08-01
+### Added
+- New variable `kubernetes_version` (default: `null`) used to specify the Kubernetes version to run. If left as `null`, the latest recommended version will be used
+- Additional logic added for static Azure Files to provision user and roles when Workload Identity is enabled
+### Changed
+- Kubelet identity's Storage Account role assignment reduced from `Storage Account Contributor` to `Storage Account Key Operator Service Role`
+- Added Workload Identity use case to `examples/static-azurefiles-pv` examples 
+### Removed
+- `identity` block with User Assigned identity in the Storage Account resource (it was not required, System Assigned user is sufficient) 
+
 ## [0.5.0] - 2024-07-30
 ### Added
 - New variable `enable_static_azurefiles` (default: `false`) will toggle whether a static Azure File file share with Private Endpoint is deployed

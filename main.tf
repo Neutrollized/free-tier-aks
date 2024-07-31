@@ -44,7 +44,7 @@ resource "azurerm_role_assignment" "aks" {
 }
 
 resource "azurerm_user_assigned_identity" "kubelet" {
-  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-kubelet-identity"
+  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-kubelet"
   location            = azurerm_resource_group.aks.location
   resource_group_name = azurerm_resource_group.aks.name
 }
@@ -66,6 +66,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = azurerm_resource_group.aks.name
   sku_tier            = var.sku_tier
   dns_prefix          = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
+
+  kubernetes_version = var.kubernetes_version
 
   azure_policy_enabled      = var.azure_policy_enabled
   workload_identity_enabled = var.enable_workload_identity

@@ -28,20 +28,10 @@ resource "azurerm_storage_account" "mystoracct" {
   account_tier             = "Premium"
   account_replication_type = "LRS"
 
-  # don't use this
-  #public_network_access_enabled = false
-
-  # only allow AKS cluster access to this Storage Account
   network_rules {
     default_action = "Deny"
     bypass         = ["AzureServices"]
     ip_rules       = var.storacct_authorized_ip_ranges
-  }
-
-  # giving Kubelet user access
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.kubelet.id]
   }
 }
 
@@ -101,15 +91,63 @@ resource "azurerm_storage_share" "myfileshare" {
   ]
 }
 
-# additional IAM roles needed for Kubelet identity
-resource "azurerm_role_assignment" "kubelet_sas" {
-  count                = var.enable_static_azurefiles ? 1 : 0
-  scope                = azurerm_storage_account.mystoracct[count.index].id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = azurerm_user_assigned_identity.kubelet.principal_id
 
-  depends_on = [
-    azurerm_storage_share.myfileshare
-  ]
+###-------------------------------------------------------
+# IAM - Kubelet Identity
+# https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage
+# used when Workload Identity is DISABLED
+#---------------------------------------------------------
+resource "azurerm_role_assignment" "kubelet_svcop" {
+  count                = var.enable_static_azurefiles && !var.enable_workload_identity ? 1 : 0
+  scope                = azurerm_storage_account.mystoracct[count.index].id
+  role_definition_name = "Storage Account Key Operator Service Role"
+  principal_id         = azurerm_user_assigned_identity.kubelet.principal_id
 }
 
+
+###-------------------------------------------------------
+# IAM - Workload Identity
+# https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage
+# used when Workload Identity is ENABLED
+#---------------------------------------------------------
+# these should match the KSA you plan on creating/using
+locals {
+  ksa_name      = "nginx-wi-ksa"
+  ksa_namespace = "default"
+}
+
+resource "azurerm_user_assigned_identity" "wi_user" {
+  count               = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
+  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-wi-user"
+  location            = azurerm_resource_group.aks.location
+  resource_group_name = azurerm_resource_group.aks.name
+}
+
+resource "azurerm_role_assignment" "wi_user_svcop" {
+  count                = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
+  scope                = azurerm_storage_account.mystoracct[count.index].id
+  role_definition_name = "Storage Account Key Operator Service Role"
+  principal_id         = azurerm_user_assigned_identity.wi_user[count.index].principal_id
+}
+
+resource "azurerm_role_assignment" "wi_user_smbcontrib" {
+  count                = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
+  scope                = azurerm_storage_account.mystoracct[count.index].id
+  role_definition_name = "Storage File Data SMB Share Contributor"
+  principal_id         = azurerm_user_assigned_identity.wi_user[count.index].principal_id
+}
+
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/federated_identity_credential
+resource "azurerm_federated_identity_credential" "storacct_wi" {
+  count               = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
+  name                = "federated-storacct-wi-user"
+  resource_group_name = azurerm_resource_group.aks.name
+  audience            = ["api://AzureADTokenExchange"]
+  issuer              = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+  parent_id           = azurerm_user_assigned_identity.wi_user[count.index].id
+  subject             = "system:serviceaccount:${local.ksa_namespace}:${local.ksa_name}"
+
+  depends_on = [
+    azurerm_user_assigned_identity.wi_user
+  ]
+}

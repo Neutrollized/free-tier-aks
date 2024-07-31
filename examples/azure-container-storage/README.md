@@ -1,6 +1,6 @@
 # Azure Container Storage (ACS)
 
-At the time of writing, [ACS](https://azure.microsoft.com/en-us/products/container-storage) is still in **Preview** status.
+At the time of writing, [ACS](https://azure.microsoft.com/en-us/products/container-storage) is ~~still in **Preview** status.~~ [GA as of July 30, 2024](https://azure.microsoft.com/en-us/blog/embrace-the-future-of-container-native-storage-with-azure-container-storage/)
 
 **NOTE:** some of the setup steps/commands via Azure CLI below are only required if you did not enable the ACS extension in the Terraform deployment
 

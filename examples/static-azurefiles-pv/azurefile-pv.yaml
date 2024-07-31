@@ -13,11 +13,12 @@ spec:
   storageClassName: azurefile-pvtendpoint
   csi:
     driver: file.csi.azure.com
-    volumeHandle: "azurefiles-storage-rg#azurefilessac84a#myfileshare"	# UPDATE THIS
+    volumeHandle: "azurefiles-storage-rg#azurefilessab775#myfileshare"	# UPDATE THIS
     volumeAttributes:
       resourceGroup: "azurefiles-storage-rg"
-      storageAccount: "azurefilessac84a"	# UPDATE THIS
+      storageAccount: "azurefilessab775"	# UPDATE THIS
       shareName: "myfileshare"
       protocol: smb
-      server: "azurefilessac84a.privatelink.file.core.windows.net"	# UPDATE THIS
+      server: "azurefilessab775.privatelink.file.core.windows.net"	# UPDATE THIS
       networkEndpointType: privateEndpoint
+      #clientID: "3af98405-266e-44f7-8ed5-7dd4057d00c5"	# UPDATE THIS IF APPLICABLE - NEW REQ FOR WI
