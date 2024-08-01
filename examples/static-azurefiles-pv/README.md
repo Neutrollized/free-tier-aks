@@ -23,7 +23,7 @@ You will have to create your own storage class if you wish to use Private Endpoi
 I have provided a custom SC, PV and PVC definition for you to try out.  At the end, you should have a volume that is mounted into your pod using a Private Endpoint and no account key stored as a Kubernetes secret! 
 
 
-## Using Workload Idenity
+## Using Workload Identity
 A requirement to use [Workload Identity](https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview?tabs=dotnet) with statically provisioned Azure Files is an AKS cluster that is v1.29+ (I tested on v1.30).  It works very similar to using a the Kubelet's identity option, but you have to provide `spec.csi.volumeAttributes.clientID` as well (which is the client ID of your Workload Identity federated user) in the PV's parameters.
 
 You will also have to create a Kubernetes service account (KSA) and reference the client ID as well in its annotations. You can see an example of this in [`nginx-wi-deploy.yaml`](./nginx-wi-deploy.yaml).
