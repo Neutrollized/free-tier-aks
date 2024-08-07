@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [0.6.1] - 2024-??-??
+## [0.7.0] - 2024-08-07
 ### Added
+- User node pool resource for running workloads
 - New variable, `enable_oidc_issuer` (default: `false`) to toggle the [OIDC issuer URL](https://learn.microsoft.com/en-gb/azure/aks/use-oidc-issuer))
+### Changed
+- Default node pool in AKS cluster resource is now the designated System node pool
+- VNet now has a dedicated subnet the System node pool and User node pool (for added network isolation boundary between compute tiers)
 
 ## [0.6.0] - 2024-08-01
 ### Added

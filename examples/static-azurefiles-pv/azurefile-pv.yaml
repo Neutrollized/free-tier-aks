@@ -11,14 +11,17 @@ spec:
   accessModes:
   - ReadWriteMany
   storageClassName: azurefile-pvtendpoint
+#  claimRef:
+#    name: [PVC_NAME]
+#    namespace: [PVC_NAMESPACE]
   csi:
     driver: file.csi.azure.com
-    volumeHandle: "azurefiles-storage-rg#azurefilessa28f4#myfileshare"	# UPDATE
+    volumeHandle: "azurefiles-storage-rg#azurefilessaafc2#myfileshare"	# UPDATE
     volumeAttributes:
       resourceGroup: "azurefiles-storage-rg"				# UPDATE
-      storageAccount: "azurefilessa28f4"				# UPDATE
+      storageAccount: "azurefilessaafc2"				# UPDATE
       shareName: "myfileshare"						# UPDATE
       protocol: smb
-      server: "azurefilessa28f4.privatelink.file.core.windows.net"	# UPDATE
+      server: "azurefilessaafc2.privatelink.file.core.windows.net"	# UPDATE
       networkEndpointType: privateEndpoint
-#      clientID: "a978cdb2-71b5-41d9-8f7d-8618b8b93c44"			# UPDATE IF APPLICABLE - REQ FOR WI
+#      clientID: "27704c63-ee0a-4625-a8c7-8c02b314a24c"			# UPDATE IF APPLICABLE - REQ FOR WI

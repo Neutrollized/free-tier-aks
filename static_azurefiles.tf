@@ -47,7 +47,7 @@ resource "azurerm_private_endpoint" "sa_pvtep" {
   name                = "${azurerm_storage_account.mystoracct[count.index].name}-pvtendpoint"
   location            = azurerm_resource_group.aks.location
   resource_group_name = azurerm_resource_group.aks.name
-  subnet_id           = azurerm_subnet.aks.id
+  subnet_id           = azurerm_subnet.aks_user.id
 
   private_service_connection {
     name                           = "azurefiles-pvtsvcconnection"

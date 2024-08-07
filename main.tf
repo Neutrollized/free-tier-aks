@@ -19,11 +19,18 @@ resource "azurerm_virtual_network" "aks" {
   address_space       = var.vnet_cidrs
 }
 
-resource "azurerm_subnet" "aks" {
-  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-subnet"
+resource "azurerm_subnet" "aks_system" {
+  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-system-subnet"
   resource_group_name  = azurerm_resource_group.aks.name
   virtual_network_name = azurerm_virtual_network.aks.name
-  address_prefixes     = var.subnet_cidrs
+  address_prefixes     = var.system_subnet_cidrs
+}
+
+resource "azurerm_subnet" "aks_user" {
+  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-user-subnet"
+  resource_group_name  = azurerm_resource_group.aks.name
+  virtual_network_name = azurerm_virtual_network.aks.name
+  address_prefixes     = var.user_subnet_cidrs
   service_endpoints    = var.subnet_service_endpoints
 }
 
@@ -104,20 +111,18 @@ resource "azurerm_kubernetes_cluster" "aks" {
     disk_driver_version = var.disk_csi_driver_version
   }
 
+  # system node pool to host only critical system pods (i.e. CoreDNS)
+  # user node pools should be created separately for workloads
   default_node_pool {
-    name       = "default"
-    node_count = var.node_count
-    vm_size    = var.vm_size
+    name       = "system"
+    node_count = var.system_node_count
+    vm_size    = var.system_vm_size
     os_sku     = var.os_sku
 
-    enable_node_public_ip = var.enable_node_public_ip
-    fips_enabled          = false
-    vnet_subnet_id        = azurerm_subnet.aks.id
-
-    # nodes need to have this label to use Azure Container Storage (ACS)
-    node_labels = {
-      "acstor.azure.com/io-engine" = "acstor"
-    }
+    enable_node_public_ip        = var.enable_node_public_ip
+    fips_enabled                 = false
+    vnet_subnet_id               = azurerm_subnet.aks_system.id
+    only_critical_addons_enabled = true
   }
 
   identity {
@@ -128,6 +133,29 @@ resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     azurerm_role_assignment.kubelet
   ]
+}
+
+
+###----------------------------------------
+# AKS Node Pool
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_node_pool
+#------------------------------------------
+resource "azurerm_kubernetes_cluster_node_pool" "user" {
+  name                  = "workloads"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  vm_size               = var.vm_size
+  vnet_subnet_id        = azurerm_subnet.aks_user.id
+  enable_node_public_ip = var.enable_node_public_ip
+
+  enable_auto_scaling = true
+  node_count          = var.initial_node_count
+  min_count           = var.min_nodes
+  max_count           = var.max_nodes
+
+  # nodes need to have this label to use Azure Container Storage (ACS)
+  node_labels = {
+    "acstor.azure.com/io-engine" = "acstor"
+  }
 }
 
 
@@ -154,4 +182,8 @@ resource "azurerm_kubernetes_cluster_extension" "acs" {
     "global.cli.resources.ioEngine.memory"       = "1Gi"
     "global.cli.resources.ioEngine.hugepages2Mi" = "1Gi"
   }
+
+  depends_on = [
+    azurerm_kubernetes_cluster_node_pool.user
+  ]
 }

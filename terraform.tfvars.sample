@@ -16,7 +16,8 @@ dns_service_ip           = "10.11.0.10"
 
 azure_policy_enabled = true
 
-vm_size    = "Standard_DS3_v2"
-node_count = 3
+enable_acs         = true
+vm_size            = "Standard_DS3_v2"
+initial_node_count = 3
+min_nodes          = 3
 
-enable_acs = true

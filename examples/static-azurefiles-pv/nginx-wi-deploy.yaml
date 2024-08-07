@@ -5,7 +5,7 @@ metadata:
  name: nginx-wi-ksa								# UPDATE
  namespace: default								# UPDATE
  annotations:
-   azure.workload.identity/client-id: "a978cdb2-71b5-41d9-8f7d-8618b8b93c44"	# UPDATE
+   azure.workload.identity/client-id: "27704c63-ee0a-4625-a8c7-8c02b314a24c"	# UPDATE
 ---
 apiVersion: apps/v1
 kind: Deployment

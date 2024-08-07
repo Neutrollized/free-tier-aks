@@ -31,10 +31,16 @@ variable "vnet_cidrs" {
   default     = ["192.168.0.0/24"]
 }
 
-variable "subnet_cidrs" {
-  description = "Subnet CIDR"
+variable "system_subnet_cidrs" {
+  description = "Subnet CIDR for System Node Pool"
   type        = list(string)
   default     = ["192.168.0.0/25"]
+}
+
+variable "user_subnet_cidrs" {
+  description = "Subnet CIDR for User Node Pool"
+  type        = list(string)
+  default     = ["192.168.0.128/25"]
 }
 
 variable "subnet_service_endpoints" {
@@ -175,17 +181,14 @@ variable "disk_csi_driver_version" {
   }
 }
 
-###--------------------------
-# AKS nodes
-#----------------------------
-variable "vm_size" {
-  description = "AKS node VM size"
+variable "system_vm_size" {
+  description = "AKS system node pool VM size"
   type        = string
-  default     = "Standard_B2s"
+  default     = "Standard_D2_v3"
 }
 
-variable "node_count" {
-  description = "AKS node count"
+variable "system_node_count" {
+  description = "AKS system node pool count"
   type        = number
   default     = 1
 }
@@ -205,6 +208,34 @@ variable "enable_node_public_ip" {
   description = "Whether nodes in the node pool should have a public IP"
   type        = bool
   default     = false
+}
+
+
+###--------------------------
+# AKS nodes
+#----------------------------
+variable "vm_size" {
+  description = "AKS user node pool VM size"
+  type        = string
+  default     = "Standard_B2s"
+}
+
+variable "initial_node_count" {
+  description = "AKS user node pool count"
+  type        = number
+  default     = 1
+}
+
+variable "min_nodes" {
+  description = "Min number of nodes in node pool"
+  type        = number
+  default     = 1
+}
+
+variable "max_nodes" {
+  description = "Max number of nodes in node pool"
+  type        = number
+  default     = 3
 }
 
 
