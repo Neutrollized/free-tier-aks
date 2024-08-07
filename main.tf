@@ -71,7 +71,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   azure_policy_enabled      = var.azure_policy_enabled
   workload_identity_enabled = var.enable_workload_identity
-  oidc_issuer_enabled       = var.enable_workload_identity
+  oidc_issuer_enabled       = var.enable_workload_identity || var.enable_oidc_issuer ? true : false
 
   api_server_access_profile {
     authorized_ip_ranges = var.aks_authorized_ip_ranges

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.6.1] - 2024-??-??
+### Added
+- New variable, `enable_oidc_issuer` (default: `false`) to toggle the [OIDC issuer URL](https://learn.microsoft.com/en-gb/azure/aks/use-oidc-issuer))
+
 ## [0.6.0] - 2024-08-01
 ### Added
 - New variable `kubernetes_version` (default: `null`) used to specify the Kubernetes version to run. If left as `null`, the latest recommended version will be used

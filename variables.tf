@@ -115,6 +115,12 @@ variable "enable_workload_identity" {
   default     = false
 }
 
+variable "enable_oidc_issuer" {
+  description = "Whether to enable the OIDC issuer URL"
+  type        = bool
+  default     = false
+}
+
 variable "network_policy" {
   description = "Network policy to be used Azure CNI. Accepted values are 'calico', 'azure', 'cilium' or null"
   type        = string

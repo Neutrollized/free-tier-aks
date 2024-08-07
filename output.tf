@@ -34,6 +34,6 @@ output "aks_workload_identity_user_client_id" {
 }
 
 output "aks_workload_identity_oidc_issuer_url" {
-  value       = var.enable_workload_identity ? "${azurerm_kubernetes_cluster.aks.oidc_issuer_url}" : "N/A - Workload Identity not enabled"
+  value       = var.enable_workload_identity || var.enable_oidc_issuer ? "${azurerm_kubernetes_cluster.aks.oidc_issuer_url}" : "N/A - Workload Identity not enabled"
   description = "OIDC Issuer URL"
 }
