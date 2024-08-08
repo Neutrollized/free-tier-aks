@@ -8,34 +8,6 @@ resource "azurerm_resource_group" "aks" {
 
 
 ###----------------------------------------
-# Network
-# https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-service-endpoints-overview
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet
-#------------------------------------------
-resource "azurerm_virtual_network" "aks" {
-  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-vnet"
-  location            = azurerm_resource_group.aks.location
-  resource_group_name = azurerm_resource_group.aks.name
-  address_space       = var.vnet_cidrs
-}
-
-resource "azurerm_subnet" "aks_system" {
-  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-system-subnet"
-  resource_group_name  = azurerm_resource_group.aks.name
-  virtual_network_name = azurerm_virtual_network.aks.name
-  address_prefixes     = var.system_subnet_cidrs
-}
-
-resource "azurerm_subnet" "aks_user" {
-  name                 = "${var.aks_cluster_name_prefix}-${var.cluster_id}-user-subnet"
-  resource_group_name  = azurerm_resource_group.aks.name
-  virtual_network_name = azurerm_virtual_network.aks.name
-  address_prefixes     = var.user_subnet_cidrs
-  service_endpoints    = var.subnet_service_endpoints
-}
-
-
-###----------------------------------------
 # IAM
 #------------------------------------------
 resource "azurerm_user_assigned_identity" "aks" {
