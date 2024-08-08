@@ -29,7 +29,7 @@ output "azure_files_file_share_name" {
 }
 
 output "aks_workload_identity_user_client_id" {
-  value       = var.enable_workload_identity ? "${azurerm_user_assigned_identity.wi_user[0].client_id}" : "N/A - Workload Identity not enabled"
+  value       = var.enable_workload_identity && var.enable_static_azurefiles ? "${azurerm_user_assigned_identity.wi_user[0].client_id}" : "N/A - Workload Identity not enabled"
   description = "Client ID of the WI user (required for k8s service account)"
 }
 
