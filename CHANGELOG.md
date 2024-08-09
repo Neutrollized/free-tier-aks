@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [0.8.2] - 2024-??-??
+### Added
+- New variable, `run_command_enabled` (default: `false`) to toggle the [Run command](https://learn.microsoft.com/en-us/azure/aks/access-private-cluster?tabs=azure-cli#run-commands-on-your-aks-cluster) feature to enhanced security
 ### Changed
 - `iam.tf` to contain IAM resources for better organization
 
@@ -21,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.7.0] - 2024-08-07
 ### Added
 - User node pool resource for running workloads
-- New variable, `enable_oidc_issuer` (default: `false`) to toggle the [OIDC issuer URL](https://learn.microsoft.com/en-gb/azure/aks/use-oidc-issuer))
+- New variable, `enable_oidc_issuer` (default: `false`) to toggle the [OIDC issuer URL](https://learn.microsoft.com/en-gb/azure/aks/use-oidc-issuer)
 ### Changed
 - Default node pool in AKS cluster resource is now the designated System node pool
 - VNet now has a dedicated subnet the System node pool and User node pool (for added network isolation boundary between compute tiers)

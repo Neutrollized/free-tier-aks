@@ -18,7 +18,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   sku_tier            = var.sku_tier
   dns_prefix          = "${var.aks_cluster_name_prefix}-${var.cluster_id}"
 
-  kubernetes_version = var.kubernetes_version
+  kubernetes_version  = var.kubernetes_version
+  run_command_enabled = var.run_command_enabled
 
   azure_policy_enabled      = var.azure_policy_enabled
   workload_identity_enabled = var.enable_workload_identity

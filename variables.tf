@@ -70,6 +70,12 @@ variable "kubernetes_version" {
   default     = null
 }
 
+variable "run_command_enabled" {
+  description = "Toggles whether to allow 'az aks command invoke' to interact directly with cluster"
+  type        = bool
+  default     = false
+}
+
 variable "sku_tier" {
   description = "AKS tier"
   type        = string
