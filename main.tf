@@ -8,34 +8,6 @@ resource "azurerm_resource_group" "aks" {
 
 
 ###----------------------------------------
-# IAM
-#------------------------------------------
-resource "azurerm_user_assigned_identity" "aks" {
-  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-user"
-  location            = azurerm_resource_group.aks.location
-  resource_group_name = azurerm_resource_group.aks.name
-}
-
-resource "azurerm_role_assignment" "aks" {
-  scope                = azurerm_resource_group.aks.id
-  role_definition_name = "Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks.principal_id
-}
-
-resource "azurerm_user_assigned_identity" "kubelet" {
-  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-kubelet"
-  location            = azurerm_resource_group.aks.location
-  resource_group_name = azurerm_resource_group.aks.name
-}
-
-resource "azurerm_role_assignment" "kubelet" {
-  scope                = azurerm_resource_group.aks.id
-  role_definition_name = "Managed Identity Operator"
-  principal_id         = azurerm_user_assigned_identity.kubelet.principal_id
-}
-
-
-###----------------------------------------
 # AKS
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 #------------------------------------------

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.8.2] - 2024-??-??
+### Changed
+- `iam.tf` to contain IAM resources for better organization
+
 ## [0.8.1] - 2024-08-08
 ### Fixed
 - Workload Identity in this deployment is only used in the static Azure Files example.  When WI was enabled but static Azure Files was not, there was an error with one of the outputs.

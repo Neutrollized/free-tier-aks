@@ -118,13 +118,6 @@ locals {
   ksa_namespace = "default"
 }
 
-resource "azurerm_user_assigned_identity" "wi_user" {
-  count               = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
-  name                = "${var.aks_cluster_name_prefix}-${var.cluster_id}-wi-user"
-  location            = azurerm_resource_group.aks.location
-  resource_group_name = azurerm_resource_group.aks.name
-}
-
 resource "azurerm_role_assignment" "wi_user_svcop" {
   count                = var.enable_static_azurefiles && var.enable_workload_identity ? 1 : 0
   scope                = azurerm_storage_account.mystoracct[count.index].id
