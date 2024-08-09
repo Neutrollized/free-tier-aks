@@ -5,9 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [0.8.2] - 2024-??-??
+## [0.9.0] - 2024-08-09
 ### Added
-- New variable, `run_command_enabled` (default: `false`) to toggle the [Run command](https://learn.microsoft.com/en-us/azure/aks/access-private-cluster?tabs=azure-cli#run-commands-on-your-aks-cluster) feature to enhanced security
+- New variable, `run_command_enabled` (default: `false`) for toggling the [Run command](https://learn.microsoft.com/en-us/azure/aks/access-private-cluster?tabs=azure-cli#run-commands-on-your-aks-cluster) feature (leave disabled for enhanced security)
 ### Changed
 - `iam.tf` to contain IAM resources for better organization
 
