@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.10.0] - 2024-08-13
+- New variable, `aks_cluster_user_roles` (default: `["Contributor"]`) which contains a list of roles to assign to the AKS cluster's identity
+### Changed
+- Logic added to create and use user-assigned Kubelet identity only when using static Azure Files without Workload Identity
+- Reorganized files
+
 ## [0.9.0] - 2024-08-09
 ### Added
 - New variable, `run_command_enabled` (default: `false`) for toggling the [Run command](https://learn.microsoft.com/en-us/azure/aks/access-private-cluster?tabs=azure-cli#run-commands-on-your-aks-cluster) feature (leave disabled for enhanced security)

@@ -51,6 +51,16 @@ variable "subnet_service_endpoints" {
 
 
 ###--------------------------
+# AKS roles
+#----------------------------
+variable "aks_cluster_user_roles" {
+  description = "List of roles to assign the the AKS cluster user"
+  type        = list(string)
+  default     = ["Contributor"]
+}
+
+
+###--------------------------
 # AKS cluster
 #----------------------------
 variable "aks_authorized_ip_ranges" {

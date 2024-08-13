@@ -30,10 +30,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   # NOTE: object ID == principal ID
-  kubelet_identity {
-    client_id                 = azurerm_user_assigned_identity.kubelet.client_id
-    object_id                 = azurerm_user_assigned_identity.kubelet.principal_id
-    user_assigned_identity_id = azurerm_user_assigned_identity.kubelet.id
+  dynamic "kubelet_identity" {
+    for_each = var.enable_static_azurefiles && !var.enable_workload_identity ? [1] : []
+    content {
+      client_id                 = azurerm_user_assigned_identity.kubelet[0].client_id
+      object_id                 = azurerm_user_assigned_identity.kubelet[0].principal_id
+      user_assigned_identity_id = azurerm_user_assigned_identity.kubelet[0].id
+    }
   }
 
   network_profile {
@@ -74,10 +77,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.aks.id]
   }
-
-  depends_on = [
-    azurerm_role_assignment.kubelet
-  ]
 }
 
 
