@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
- name: nginx-wi-ksa								# UPDATE
- namespace: default								# UPDATE
+ name: [WORKLOAD_IDENTITY_KSA_NAME]
+ namespace: [WORKLOAD_IDENTITY_KSA_NAMESPACE]
  annotations:
-   azure.workload.identity/client-id: "37418b09-436a-4922-861b-4c0b6ac13efb"	# UPDATE
+   azure.workload.identity/client-id: "[WORKLOAD_IDENTITY_USER_CLIENTID]"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,7 +26,7 @@ spec:
         app: nginx-wi
         azure.workload.identity/use: "true"
     spec:
-      serviceAccountName: nginx-wi-ksa
+      serviceAccountName: [WORKLOAD_IDENTITY_KSA_NAME]
       containers:
       - name: mypod
         image: nginx:latest
