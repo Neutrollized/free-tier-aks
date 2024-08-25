@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [0.11.0] - 2024-08-25
+### Added
 - New variable, `storage_profile` (type: map(bool)) used to set [Storage Profile](https://registry.terraform.io/providers/hashicorp/azurerm/3.116.0/docs/resources/kubernetes_cluster#storage_profile) settings (i.e. toggling CSI drivers)
 ### Removed
 - Variable `disk_csi_driver_version` as setting appears to have been deprecated since provider version `3.116.0` (but not documented in provider changelog)
