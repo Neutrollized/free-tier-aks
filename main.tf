@@ -52,11 +52,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   storage_profile {
-    blob_driver_enabled = var.blob_csi_driver_enabled
-    file_driver_enabled = var.file_csi_driver_enabled
-
-    disk_driver_enabled = var.disk_csi_driver_enabled
-    disk_driver_version = var.disk_csi_driver_version
+    blob_driver_enabled         = lookup(var.storage_profile, "blob_csi_driver_enabled", false)
+    disk_driver_enabled         = lookup(var.storage_profile, "disk_csi_driver_enabled", false)
+    file_driver_enabled         = lookup(var.storage_profile, "file_csi_driver_enabled", false)
+    snapshot_controller_enabled = lookup(var.storage_profile, "snapshot_controller_enabled", true)
   }
 
   # system node pool to host only critical system pods (i.e. CoreDNS)

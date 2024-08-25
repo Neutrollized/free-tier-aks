@@ -20,4 +20,3 @@ enable_acs         = true
 vm_size            = "Standard_DS3_v2"
 initial_node_count = 3
 min_nodes          = 3
-

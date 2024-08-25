@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [0.10.1] - 2024-08-19
+## [0.11.0] - 2024-08-25
+- New variable, `storage_profile` (type: map(bool)) used to set [Storage Profile](https://registry.terraform.io/providers/hashicorp/azurerm/3.116.0/docs/resources/kubernetes_cluster#storage_profile) settings (i.e. toggling CSI drivers)
+### Removed
+- Variable `disk_csi_driver_version` as setting appears to have been deprecated since provider version `3.116.0` (but not documented in provider changelog)
 ### Changed
 - Template/formatting updates to `examples/static-azurefiles-pv`
 
@@ -79,7 +82,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Added `examples` folder for organization, moved `cilium` and `tetragon` folders under it
 
-- New variable `blob_csi_driver_enabled` (default: `false`) which toggles [Azure Blob CSI driver](https://learn.microsoft.com/en-us/azure/aks/azure-blob-csi?tabs=NFS) on the cluster 
 ## [0.2.4] - 2024-06-22
 ### Added
 - New variable `blob_csi_driver_enabled` (default: `false`) which toggles [Azure Blob CSI driver](https://learn.microsoft.com/en-us/azure/aks/azure-blob-csi?tabs=NFS) on the cluster 
