@@ -19,4 +19,4 @@ parameters:
   networkEndpointType: privateEndpoint
   protocol: smb
   skuName: Premium_LRS
-  storageAccountKey: "false"
+  storeAccountKey: "false"

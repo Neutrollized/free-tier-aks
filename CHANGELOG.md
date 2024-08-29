@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.11.1] - 2024-08-29
+### Fixed
+- Typo in `azurefile-pvtendpoint-sc.yaml` (although it doesn't affect the deployment as it's a setting meant for dynamically provisioned PVs)
+
 ## [0.11.0] - 2024-08-25
 ### Added
 - New variable, `storage_profile` (type: map(bool)) used to set [Storage Profile](https://registry.terraform.io/providers/hashicorp/azurerm/3.116.0/docs/resources/kubernetes_cluster#storage_profile) settings (i.e. toggling CSI drivers)
