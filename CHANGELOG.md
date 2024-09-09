@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.11.2] - 2024-09-09
+### Changed
+- Made default static Azure Files to be Standard SKU (commented out the "Premium" settings)
+
 ## [0.11.1] - 2024-08-29
 ### Fixed
 - Typo in `azurefile-pvtendpoint-sc.yaml` (although it doesn't affect the deployment as it's a setting meant for dynamically provisioned PVs)

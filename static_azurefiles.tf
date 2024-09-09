@@ -26,8 +26,9 @@ resource "azurerm_storage_account" "mystoracct" {
   resource_group_name = azurerm_resource_group.storacctrg[count.index].name
   location            = azurerm_resource_group.storacctrg[count.index].location
 
-  account_kind             = "FileStorage"
-  account_tier             = "Premium"
+  # account_kind             = "FileStorage" # default: StorageV2
+  # account_tier             = "Premium"
+  account_tier             = "Standard"
   account_replication_type = "LRS"
 
   network_rules {
@@ -84,8 +85,9 @@ resource "azurerm_storage_share" "myfileshare" {
   count                = var.enable_static_azurefiles ? 1 : 0
   name                 = local.azurefiles_share
   storage_account_name = azurerm_storage_account.mystoracct[count.index].name
-  access_tier          = "Premium"
-  quota                = 101 # (max) size of share in GiB -- needs to be > 100 for Premium access tier
+  # access_tier          = "Premium"
+  access_tier = "TransactionOptimized"
+  quota       = 101 # (max) size of share in GiB -- needs to be > 100 if using Premium access tier
 
   depends_on = [
     azurerm_private_endpoint.sa_pvtep,
