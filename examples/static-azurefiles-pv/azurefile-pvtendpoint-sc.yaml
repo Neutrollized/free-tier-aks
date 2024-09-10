@@ -18,5 +18,5 @@ mountOptions:
 parameters:
   networkEndpointType: privateEndpoint
   protocol: smb
-  skuName: Premium_LRS
+  skuName: Standard_LRS
   storeAccountKey: "false"

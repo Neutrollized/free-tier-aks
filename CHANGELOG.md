@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.11.3] - 2024-09-10
+### Fixed
+- Forgot to update Azure Files SKU from `Premium_LRS` to `Standard_LRS` in `azurefile-pvtendpoint-sc.yaml`
+
 ## [0.11.2] - 2024-09-09
 ### Changed
 - Made default static Azure Files to be Standard SKU (commented out the "Premium" settings)
