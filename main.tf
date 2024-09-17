@@ -40,8 +40,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    ebpf_data_plane = var.enable_ebpf_data_plane ? "cilium" : null
-
+    network_data_plane  = var.enable_ebpf_data_plane ? "cilium" : "azure"
     network_plugin      = var.enable_ebpf_data_plane ? "azure" : var.network_plugin
     network_plugin_mode = var.network_plugin == "azure" || var.enable_ebpf_data_plane ? "overlay" : null
     network_policy      = var.enable_ebpf_data_plane ? "cilium" : var.network_policy
@@ -66,7 +65,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size    = var.system_vm_size
     os_sku     = var.os_sku
 
-    enable_node_public_ip        = var.enable_node_public_ip
+    node_public_ip_enabled       = var.enable_node_public_ip
     fips_enabled                 = false
     vnet_subnet_id               = azurerm_subnet.aks_system.id
     only_critical_addons_enabled = true
@@ -84,16 +83,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_node_pool
 #------------------------------------------
 resource "azurerm_kubernetes_cluster_node_pool" "user" {
-  name                  = "workloads"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vm_size               = var.vm_size
-  vnet_subnet_id        = azurerm_subnet.aks_user.id
-  enable_node_public_ip = var.enable_node_public_ip
+  name                   = "workloads"
+  kubernetes_cluster_id  = azurerm_kubernetes_cluster.aks.id
+  vm_size                = var.vm_size
+  vnet_subnet_id         = azurerm_subnet.aks_user.id
+  node_public_ip_enabled = var.enable_node_public_ip
 
-  enable_auto_scaling = true
-  node_count          = var.initial_node_count
-  min_count           = var.min_nodes
-  max_count           = var.max_nodes
+  auto_scaling_enabled = true
+  node_count           = var.initial_node_count
+  min_count            = var.min_nodes
+  max_count            = var.max_nodes
 
   # nodes need to have this label to use Azure Container Storage (ACS)
   node_labels = {
