@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [0.12.0] - ????-??-??
+### Added
+- `lifecycle` rule to ignore changes to default node pool's upgrade settings
 ### Changed
 - Updated **azurerm** provider from `~> 3.0` to `~> 4.0`
 - Updated renamed argument names

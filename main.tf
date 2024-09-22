@@ -75,6 +75,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.aks.id]
   }
+
+  lifecycle {
+    ignore_changes = [
+      default_node_pool[0].upgrade_settings,
+    ]
+  }
 }
 
 
