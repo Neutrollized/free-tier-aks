@@ -1,5 +1,5 @@
 # cilium install --list-versions
-cilium_version = "1.15.6"
+cilium_version = "1.16.2"
 cluster_id     = 1
 
 # full cluster name will be prefix + cluster_id (i.e. "playground-aks-1")
