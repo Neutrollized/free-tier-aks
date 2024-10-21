@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.13.0] - 2024-10-21
+### Added
+- New provider, `azuread` used to create/manage Azure AD (Entra ID) groups
+- New variable, `enable_uaid_kubelet` (default: `false`) used for 
+- Custom Azure role definition that can only list Storage Account Keys (and not regenerate)
+### Changed
+- Updated **hashicorp/random** provider from `v3.5.1` to `v3.6.3`
+- Terraform tests AKS network profile data plane settings name change
+- "Storage Account Key Operator Service Role" no longer assigned directly to Kubelet identity
+- Custom role assigned to Azure AD group scoped to the Storage Account, and Kubelet identity now assigned to Azure AD group instead
+
 ## [0.12.0] - 2024-10-02
 ### Added
 - `lifecycle` rule to ignore changes to default node pool's upgrade settings

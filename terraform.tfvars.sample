@@ -1,5 +1,5 @@
 # cilium install --list-versions
-cilium_version = "1.16.2"
+cilium_version = "1.16.3"
 cluster_id     = 1
 
 # full cluster name will be prefix + cluster_id (i.e. "playground-aks-1")
@@ -8,15 +8,21 @@ aks_cluster_name_prefix = "playground-aks"
 aks_authorized_ip_ranges = ["123.45.67.89/32"]
 
 enable_ebpf_data_plane = true
+azure_policy_enabled   = true
 
 subnet_service_endpoints = ["Microsoft.ContainerRegistry", "Microsoft.Storage"]
 pods_ipv4_cidr_block     = ["10.10.0.0/18"]
 services_ipv4_cidr_block = ["10.11.0.0/20"]
 dns_service_ip           = "10.11.0.10"
 
-azure_policy_enabled = true
+enable_uaid_kubelet      = false
+enable_workload_identity = false
 
 enable_acs         = true
 vm_size            = "Standard_DS3_v2"
 initial_node_count = 3
 min_nodes          = 3
+
+storage_profile = {
+  file_csi_driver_enabled = true
+}

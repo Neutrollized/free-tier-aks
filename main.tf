@@ -31,7 +31,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # NOTE: object ID == principal ID
   dynamic "kubelet_identity" {
-    for_each = var.enable_static_azurefiles && !var.enable_workload_identity ? [1] : []
+    for_each = var.enable_uaid_kubelet ? [1] : []
     content {
       client_id                 = azurerm_user_assigned_identity.kubelet[0].client_id
       object_id                 = azurerm_user_assigned_identity.kubelet[0].principal_id

@@ -10,6 +10,9 @@ If you're mounting a volume from a Storage Account such as Azure Files or Blob, 
 
 If you deploy this AKS cluster with `enable_static_azurefiles = true`, it blueprint will deploy a static Storage Account with a Private Endpoint and finally a File Share.
 
+### Using Azure AD / Entra ID groups
+As of [v0.13.0](https://github.com/Neutrollized/free-tier-aks/blob/main/CHANGELOG.md#0130---2024-10-21), I've updated the role assignment to an Azure AD group instead of directly to the Kubelet identity.  This makes management easier in scenarios where multiple principals may need access to the same Storage Account. 
+
 ### Storage Account deployment note 
 I don't know if this a bug or if it's working as intended, but when you go throught the CSI driver to dynamically provision an Azure Files share with a Private Endpoint, it creates a Storage Account network rule that allows no external networks allowing only *AzureServices* to bypass it.  Because your traffic is coming from your CSI driver in your AKS node that is the same network already (remember: Private Endpoint), this traffic is internal/local. 
 

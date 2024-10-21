@@ -32,7 +32,7 @@ run "create_free_tier_aks" {
 
   # Check that Cilium CNI is enabled correctly
   assert {
-    condition     = azurerm_kubernetes_cluster.aks.network_profile[0].ebpf_data_plane == "cilium"
+    condition     = azurerm_kubernetes_cluster.aks.network_profile[0].network_data_plane == "cilium"
     error_message = "Invalid dataplane"
   }
 }

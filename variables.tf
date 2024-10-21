@@ -51,12 +51,18 @@ variable "subnet_service_endpoints" {
 
 
 ###--------------------------
-# AKS roles
+# AKS identities & roles
 #----------------------------
 variable "aks_cluster_user_roles" {
-  description = "List of roles to assign the the AKS cluster user"
+  description = "List of roles to assign to the AKS cluster user"
   type        = list(string)
   default     = ["Contributor"]
+}
+
+variable "enable_uaid_kubelet" {
+  description = "Whether to use a user-assigned ID for Kubelet"
+  type        = bool
+  default     = false
 }
 
 
