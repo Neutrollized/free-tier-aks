@@ -1,6 +1,8 @@
 # Tracing Policy examples
 You can find more in my [GKE repo's examples](https://github.com/Neutrollized/free-tier-gke/tree/master/examples/tetragon).
 
+[Medium article](https://medium.com/azure-terraformer/azure-kubernetes-service-supports-a-powerful-tetragon-feature-a62165d884e1)
+
 ## Setup
 ```console
 helm repo add cilium https://helm.cilium.io
@@ -30,3 +32,4 @@ If it doesn't return a result, then you probably don't have the setting enabled.
 
 ### Kernel Function References
 - [sys_linkat](https://elixir.bootlin.com/linux/v4.8/source/fs/namei.c#L4217)
+- [sys_write](https://elixir.bootlin.com/linux/v6.11.7/source/fs/read_write.c#L652)

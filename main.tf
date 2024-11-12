@@ -119,16 +119,16 @@ resource "azurerm_kubernetes_cluster_extension" "acs" {
   extension_type = "microsoft.azurecontainerstorage"
 
   configuration_settings = {
-    "global.cli.activeControl"                   = true
-    "global.cli.storagePool.install.create"      = false
-    "global.cli.storagePool.disable.validation"  = false
-    "global.cli.storagePool.disable.active"      = false
-    "global.cli.storagePool.azureDisk.enabled"   = var.acs_azuredisk_enabled
-    "global.cli.storagePool.azureDisk.sku"       = var.acs_azuredisk_sku
-    "global.cli.resources.num_hugepages"         = "512"
-    "global.cli.resources.ioEngine.cpu"          = "1"
-    "global.cli.resources.ioEngine.memory"       = "1Gi"
-    "global.cli.resources.ioEngine.hugepages2Mi" = "1Gi"
+    "global.cli.activeControl"                   = lookup(var.acs_config, "activecontrol")
+    "global.cli.storagePool.install.create"      = lookup(var.acs_config, "storagepool_install_create")
+    "global.cli.storagePool.disable.validation"  = lookup(var.acs_config, "storagepool_disable_validation")
+    "global.cli.storagePool.disable.active"      = lookup(var.acs_config, "storagepool_disable_active")
+    "global.cli.storagePool.azureDisk.enabled"   = lookup(var.acs_config, "storagepool_azuredisk_enabled")
+    "global.cli.storagePool.azureDisk.sku"       = lookup(var.acs_config, "storagepool_azuredisk_sku")
+    "global.cli.resources.num_hugepages"         = lookup(var.acs_config, "resources_num_hugepages")
+    "global.cli.resources.ioEngine.cpu"          = lookup(var.acs_config, "resources_ioengine_cpu")
+    "global.cli.resources.ioEngine.memory"       = lookup(var.acs_config, "resources_ioengine_memory")
+    "global.cli.resources.ioEngine.hugepages2Mi" = lookup(var.acs_config, "resources_ioengine_hugepages2mi")
   }
 
   depends_on = [

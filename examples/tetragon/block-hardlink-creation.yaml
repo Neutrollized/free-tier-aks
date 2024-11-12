@@ -3,6 +3,8 @@ apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
   name: "block-hardlink-creation"
+  annotations:
+    description: "Blocks creation of a hard links"
 spec:
   kprobes:
   - call: "sys_linkat"

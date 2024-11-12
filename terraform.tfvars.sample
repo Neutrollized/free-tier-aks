@@ -18,11 +18,15 @@ dns_service_ip           = "10.11.0.10"
 enable_uaid_kubelet      = false
 enable_workload_identity = false
 
-enable_acs         = true
+enable_acs = true
 vm_size            = "Standard_DS3_v2"
 initial_node_count = 3
 min_nodes          = 3
 
 storage_profile = {
   file_csi_driver_enabled = true
+}
+
+acs_config = {
+  storagepool_azuredisk_sku = "StandardSSD_LRS"
 }

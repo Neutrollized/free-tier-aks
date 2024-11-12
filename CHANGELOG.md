@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.14.0] - 2024-11-11
+### Added
+- New variable `acs_config` is an object variable for setting various Azure Container Storage configurations
+### Changed
+- Variables `acs_azuredisk_enabled` and `acs_azuredisk_sku` settings now configured in `acs_config`
+- Updated `examples/tetragon`
+
 ## [0.13.0] - 2024-10-21
 ### Added
 - New provider, `azuread` used to create/manage Azure AD (Entra ID) groups
