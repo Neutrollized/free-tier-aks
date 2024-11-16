@@ -31,9 +31,10 @@ If it doesn't return a result, then you probably don't have the setting enabled.
 
 ### Sigkill vs Override
 - using "Sigkill" to stop a `sys_write`:
-
+![tetragon_syswrite_sigkill](https://github.com/user-attachments/assets/8a403a88-1e7e-4c3c-b638-44ef672346a6)
 
 - using "Override" to stop a `sys_write`:
+![tetragon_syswrite_override](https://github.com/user-attachments/assets/7df1a9ee-cc67-49b0-a0ec-5096f57c7b34)
 
 
 ## Kernel Function References
