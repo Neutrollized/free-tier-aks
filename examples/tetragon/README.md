@@ -29,7 +29,13 @@ cat /proc/kallsyms | grep kprobe_override
 
 If it doesn't return a result, then you probably don't have the setting enabled.
 
+### Sigkill vs Override
+- using "Sigkill" to stop a `sys_write`:
 
-### Kernel Function References
+
+- using "Override" to stop a `sys_write`:
+
+
+## Kernel Function References
 - [sys_linkat](https://elixir.bootlin.com/linux/v4.8/source/fs/namei.c#L4217)
 - [sys_write](https://elixir.bootlin.com/linux/v6.11.7/source/fs/read_write.c#L652)
