@@ -10,6 +10,7 @@ spec:
     storage: 100Gi
   accessModes:
   - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain # "Delete" won't work for statically provisioned fileshare
   storageClassName: azurefile-pvtendpoint
 #  claimRef:
 #    name: [PVC_NAME]
@@ -25,3 +26,8 @@ spec:
       server: "[STORACCT_NAME].privatelink.file.core.windows.net"
       networkEndpointType: privateEndpoint
 #      clientID: "[WORKLOAD_IDENTITY_USER_CLIENTID]"			# UPDATE IF APPLICABLE
+  mountOptions:
+  - dir_mode=0750
+  - file_mode=0640
+  - uid=0 # change this to your app user's uid
+  - gid=0 # leave this, otherwise it can't mount volume

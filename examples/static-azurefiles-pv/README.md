@@ -60,4 +60,8 @@ Address: 192.168.0.4
 
 
 ## Additional notes
-You **CANNOT** migrate from using Kubelet identity to Workload Identity.  And this is because the PV's spec is immutable once created, but in order to use Workload Identity, you need to add the WI user's client ID as a parameter in the PV's spec.
+- you **CANNOT** migrate from using Kubelet identity to Workload Identity.  And this is because the PV's spec is immutable once created, but in order to use Workload Identity, you need to add the WI user's client ID as a parameter in the PV's spec.
+- if you specify a `spec.claimRef` in your PV definition, a lot of the settings won't matter (`spec.storageClassName`, `spec.capacity.storage`)
+- `spec.capacity.storage` will always take the size of the fileshare (think of it like an NFS export -- you get the entire export, not just a slice)
+- `spec.accessModes` won't matter because the fileshare is RW.  You would only be able to mount the volume in RO mode if `spec.template.spec.containers.volumeMounts.readOnly` is set to `false`
+- mount options such as `dir_mode`, `file_mode`, `uid`, and `gid` will be ignored if specified in Storage Class.  You will need to set these config options in `spec.mountOptions` at the Persistent Volume level

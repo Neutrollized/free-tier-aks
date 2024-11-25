@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.14.1] - 2024-11-25
+### Changed
+- Updated `examples/static-azurefiles-pv` with more detailed notes about configuration options
+
 ## [0.14.0] - 2024-11-11
 ### Added
 - New variable `acs_config` is an object variable for setting various Azure Container Storage configurations

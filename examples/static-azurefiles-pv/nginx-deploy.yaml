@@ -20,6 +20,7 @@ spec:
         image: nginx:latest
         securityContext:
           allowPrivilegeEscalation: false
+          privileged: false
         ports:
         - name: web
           containerPort: 80
@@ -28,6 +29,7 @@ spec:
             cpu: "250m"
         volumeMounts:
         - mountPath: "/mnt/azure"
+          #subPath: "some_dir"  # sub-path from fileshare's root
           name: myvol
           readOnly: false
       volumes:
