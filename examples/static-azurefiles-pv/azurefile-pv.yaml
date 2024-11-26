@@ -17,7 +17,7 @@ spec:
 #    namespace: [PVC_NAMESPACE]
   csi:
     driver: file.csi.azure.com
-    volumeHandle: "[STORACCT_RG_NAME]#[STORACCT_NAME]#[FILESHARE_NAME]"
+    volumeHandle: "[STORACCT_NAME]#[FILESHARE_NAME]#[PVC_NAMESPACE]"
     volumeAttributes:
       resourceGroup: "[STORACCT_RG_NAME]"
       storageAccount: "[STORACCT_NAME]"

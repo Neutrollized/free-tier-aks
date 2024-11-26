@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.14.1] - 2024-11-25
 ### Changed
 - Updated `examples/static-azurefiles-pv` with more detailed notes about configuration options
+- Updated `spec.csi.volumeHandle` format in `examples/static-azurefiles-pv/azurefile-pv.yaml` as it should be unique across namespaces in the AKS cluster
 
 ## [0.14.0] - 2024-11-11
 ### Added
