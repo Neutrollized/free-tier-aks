@@ -9,4 +9,4 @@ spec:
     azureDisk: {}
   resources:
     requests:
-      storage: 100Gi
+      storage: 1Ti

@@ -179,7 +179,7 @@ variable "storage_profile" {
   type        = map(bool)
   default = {
     blob_csi_driver_enabled     = false
-    disk_csi_driver_enabled     = false
+    disk_csi_driver_enabled     = true
     file_csi_driver_enabled     = false
     snapshot_controller_enabled = true
   }
@@ -255,16 +255,22 @@ variable "enable_acs" {
 variable "acs_config" {
   description = "Azure Container Storage configuration settings"
   type = object({
-    activecontrol                   = optional(bool, true)
-    storagepool_install_create      = optional(bool, false)
-    storagepool_disable_validation  = optional(bool, false)
-    storagepool_disable_active      = optional(bool, false)
-    storagepool_azuredisk_enabled   = optional(bool, true)
-    storagepool_azuredisk_sku       = optional(string, "Premium_LRS")
-    resources_num_hugepages         = optional(number, 512)
-    resources_ioengine_cpu          = optional(number, 1)
-    resources_ioengine_memory       = optional(string, "1Gi")
-    resources_ioengine_hugepages2mi = optional(string, "1Gi")
+    activecontrol                           = optional(bool, true)
+    storagepool_install_create              = optional(bool, false)
+    storagepool_install_name                = optional(string, "azuredisk")
+    storagepool_install_size                = optional(string, "512Gi")
+    storagepool_disable_validation          = optional(bool, false)
+    storagepool_disable_active              = optional(bool, false)
+    storagepool_azuredisk_enabled           = optional(bool, true)
+    storagepool_elasticsan_enabled          = optional(bool, false)
+    storagepool_ephemeraldisk_nvme_enabled  = optional(bool, false)
+    storagepool_ephemeraldisk_nvme_perftier = optional(string, "Standard")
+    storagepool_ephemeraldisk_temp_enabled  = optional(bool, false)
+    storagepool_azuredisk_sku               = optional(string, "Premium_LRS")
+    resources_num_hugepages                 = optional(number, 512)
+    resources_ioengine_cpu                  = optional(number, 1)
+    resources_ioengine_memory               = optional(string, "1Gi")
+    resources_ioengine_hugepages2mi         = optional(string, "1Gi")
   })
   default = {}
 
@@ -272,20 +278,4 @@ variable "acs_config" {
     condition     = contains(["Premium_LRS", "Standard_LRS", "StandardSSD_LRS", "UltraSSD_LRS", "Premium_ZRS", "PremiumV2_LRS", "StandardSSD_ZRS"], var.acs_config.storagepool_azuredisk_sku)
     error_message = "Accepted values are 'Premium_LRS', 'Standard_LRS', 'StandardSSD_LRS', 'UltraSSD_LRS', 'Premium_ZRS', 'PremiumV2_LRS', or 'StandardSSD_ZRS'"
   }
-}
-
-
-###-----------------------------
-# Misc. - Static Azure Files
-#-------------------------------
-variable "enable_static_azurefiles" {
-  description = "Whether to deploy Azure Files statically"
-  type        = bool
-  default     = false
-}
-
-variable "storacct_authorized_ip_ranges" {
-  description = "Authorized IP ranges that is allowed (not denied by Storage Account network rules). For single IPs, do not include the netmask"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
 }

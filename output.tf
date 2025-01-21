@@ -13,21 +13,6 @@ output "_vnet_id" {
   description = "Azure VNet ID for use when performing network peering or VPNs."
 }
 
-output "azure_files_storage_account_rg_name" {
-  value       = var.enable_static_azurefiles ? "${azurerm_resource_group.storacctrg[0].name}" : "N/A - Static Azure Files not deployed"
-  description = "Name of Resource Group housing Storage Account (required for PV config)"
-}
-
-output "azure_files_storage_account_name" {
-  value       = var.enable_static_azurefiles ? "${azurerm_storage_account.mystoracct[0].name}" : "N/A - Static Azure Files not deployed"
-  description = "Name of Azure Storage Account providing Azure Files (required for PV config)"
-}
-
-output "azure_files_file_share_name" {
-  value       = var.enable_static_azurefiles ? "${azurerm_storage_share.myfileshare[0].name}" : "N/A - Static Azure Files not deployed"
-  description = "Name of Azure Files file share (required for PV config)"
-}
-
 output "aks_workload_identity_user_client_id" {
   value       = var.enable_workload_identity ? "${azurerm_user_assigned_identity.wi_user[0].client_id}" : "N/A - Workload Identity not enabled"
   description = "Client ID of the WI user (required for k8s service account)"

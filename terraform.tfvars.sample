@@ -26,7 +26,3 @@ min_nodes          = 3
 storage_profile = {
   file_csi_driver_enabled = true
 }
-
-acs_config = {
-  storagepool_azuredisk_sku = "StandardSSD_LRS"
-}

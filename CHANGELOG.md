@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [0.15.0] - 2025-01-21
+### Changed
+- Updated default `storage_profile.disk_csi_driver_enabled` value to `true`
+- Updated Azure Container Storage `acs_config` variable with new settings values
+- Azure Container Storage extension version set to `1.2.0`
+- Split AKS Extensions into its own file, `aks_extensions.tf`
+### Removed
+- Resources associated with `examples/static-azurefiles-pv` (this was originally added for learning purposes, but it's not really a solution I would recommend)
+
 ## [0.14.1] - 2024-11-26
 ### Changed
 - Updated `examples/static-azurefiles-pv` with more detailed notes about configuration options
